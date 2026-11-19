@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Эльбаззаро"><meta name="application-name" content="Эльбаззаро"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#f6dfb3"><title>Эльбаззаро</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Lobster&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style id="css">:root{--bg:#fbf3e4;--ink:#2b1a12;--muted:#7a5a46;--red:#c1352b;--green:#2f7d4f;--gold:#e7ad4c;--teal:#1f8a8a;--card:#fffaf1;--line:#ecd9bb;--amber:#b97a10}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Rubik,system-ui,sans-serif;font-size:16px}
+button{font-family:inherit;cursor:pointer}
+.hero{background:radial-gradient(ellipse at 50% 0,#fff4d8 0,#f6dfb3 70%);text-align:center;padding:calc(18px + env(safe-area-inset-top)) 12px 0;position:relative}
+.hero-in{padding-bottom:16px}
+.logo{width:150px;height:auto;display:block;margin:0 auto -4px}
+h1{font-family:Lobster,cursive;font-weight:400;font-size:46px;margin:0;color:var(--red);letter-spacing:.5px;text-shadow:2px 2px 0 #f2c26b}
+.sub{margin:2px 0 0;color:var(--muted);font-size:14px;letter-spacing:2px;text-transform:uppercase}
+.picado{height:14px;background:
+ linear-gradient(135deg,var(--bg) 25%,transparent 25%) -7px 0/14px 14px,
+ linear-gradient(225deg,var(--bg) 25%,transparent 25%) -7px 0/14px 14px,
+ linear-gradient(90deg,var(--red) 0 33%,var(--gold) 33% 66%,var(--green) 66%) 0 0/126px 100%}
+.tabs{display:flex;gap:6px;max-width:980px;margin:16px auto 0;padding:0 12px;position:sticky;top:0;z-index:5;background:var(--bg);padding-top:6px;padding-bottom:6px}
+.tab{flex:1;border:2px solid var(--ink);background:var(--card);color:var(--ink);font-weight:700;font-size:15px;letter-spacing:1.5px;text-transform:uppercase;padding:12px 6px;border-radius:12px;transition:.15s}
+.tab:hover{background:#fff1d6}
+.tab.on{background:var(--red);color:#fff;box-shadow:0 4px 0 var(--ink);transform:translateY(-2px)}
+main{max-width:980px;margin:0 auto;padding:12px 12px 120px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:16px;margin-top:12px}
+.start{text-align:center;padding:36px 16px}
+.big{background:var(--green);color:#fff;border:2px solid var(--ink);border-radius:14px;font-size:20px;font-weight:700;padding:16px 26px;box-shadow:0 4px 0 var(--ink);transition:.1s}
+.big:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.big.sm{font-size:17px;padding:12px 22px}
+.big:disabled{background:#b9ad9a;cursor:default;box-shadow:0 2px 0 #8d816f}
+.ghost{background:transparent;border:2px dashed var(--muted);color:var(--ink);border-radius:12px;padding:10px 16px;font-size:15px}
+.ghost:hover{background:#fff1d6}
+.hint{color:var(--muted);margin:14px 0 0}
+.lbl{display:block;font-weight:700;margin-bottom:8px}
+textarea{width:100%;min-height:180px;border:2px solid var(--line);border-radius:12px;padding:12px;font:inherit;background:#fff;resize:vertical}
+textarea:focus,.in:focus{outline:none;border-color:var(--teal)}
+.row-btns{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.row-btns.end{justify-content:flex-end}
+.total{background:var(--ink);color:#fff;border-radius:18px;padding:20px;margin-top:16px;text-align:center}
+.total-l{text-transform:uppercase;letter-spacing:2px;font-size:13px;color:var(--gold)}
+.total-v{font-size:44px;font-weight:800;margin:4px 0 10px;font-variant-numeric:tabular-nums}
+.total-v span{font-size:20px;font-weight:500;color:var(--gold)}
+.chips{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.chip{font-size:13px;padding:4px 10px;border-radius:99px;background:#3d2a20}
+.chip.ok{background:var(--green)}.chip.red{background:var(--red)}.chip.amber{background:var(--amber)}
+.list{margin-top:14px}
+.lh,.li{display:grid;grid-template-columns:1.3fr 1.5fr 120px 100px 120px 34px;gap:8px;align-items:center}
+.lh{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:0 12px 6px}
+.li{background:var(--card);border:2px solid var(--line);border-left:6px solid var(--green);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.li.warn{border-left-color:var(--amber)}
+.li.unk{border-left-color:var(--red);background:#fff2ee}
+.c.raw{color:var(--muted);font-size:14px;word-break:break-word}
+.c.pr,.c.sm{text-align:right;font-variant-numeric:tabular-nums}
+.c.qty{display:flex;align-items:center;gap:4px}
+.u{font-size:13px;color:var(--muted);min-width:22px}
+.note{grid-column:1/-1;font-size:13px;color:var(--muted)}
+.li.unk .note{color:var(--red)}.li.warn .note{color:var(--amber)}
+.sugg{border:1px solid var(--red);background:#fff;color:var(--red);border-radius:99px;padding:2px 10px;font-size:13px;margin:2px}
+.in{width:100%;border:2px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;background:#fff;color:var(--ink)}
+.qin{text-align:right}
+.x{border:none;background:transparent;color:var(--muted);font-size:22px;line-height:1;padding:4px}
+.x:hover{color:var(--red)}
+.copybox{min-height:120px;margin-top:10px}
+.ptools{display:flex;flex-direction:column;gap:8px}
+.search{font-size:16px;padding:12px}
+.pmeta{font-size:13px;color:var(--muted)}
+.ptable{margin-top:12px;background:var(--card);border:2px solid var(--line);border-radius:16px;overflow:hidden}
+.ph,.pr-row{display:grid;grid-template-columns:1fr 200px 40px;gap:8px;align-items:center;padding:6px 12px}
+.ph{background:var(--ink);color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:1px;padding:10px 12px}
+.pr-row{border-top:1px solid var(--line)}
+.pr-row:nth-child(even){background:#fdf3e2}
+.pr-row .in{border-color:transparent;background:transparent}
+.pr-row .in:hover{border-color:var(--line);background:#fff}
+.pr-row .in:focus{background:#fff}
+.pprice{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.pprice.empty{color:var(--muted);font-weight:400}
+.pr-row.confirm .x{font-size:12px;color:#fff;background:var(--red);border-radius:8px;padding:6px}
+.pr-row.confirm{grid-template-columns:1fr 200px 80px}
+.empty-msg{padding:20px;text-align:center;color:var(--muted)}
+.savebar{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:#fff;display:flex;justify-content:center;align-items:center;gap:16px;padding:12px 12px calc(12px + env(safe-area-inset-bottom));z-index:10}
+.savebar .dirty{color:var(--gold);font-weight:600}
+.stub{text-align:center;padding:50px 16px}
+.stub-ico{font-size:52px}
+.stub h2{font-family:Lobster,cursive;font-weight:400;font-size:32px;margin:8px 0 4px;color:var(--red)}
+.stub p{color:var(--muted);margin:0}
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;padding:12px 18px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;z-index:20;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.bad{background:var(--red)}
+@media (max-width:720px){
+ h1{font-size:38px}.logo{width:120px}
+ .tab{font-size:13px;letter-spacing:.5px;padding:11px 4px}
+ .total-v{font-size:34px}
+ .lh{display:none}
+ .li{grid-template-columns:1fr 1fr;gap:6px 10px}
+ .c.raw{grid-column:1/-1}
+ .c.prod{grid-column:1/-1}
+ .c.pr,.c.sm{text-align:left}
+ .c.pr::before,.c.sm::before{content:attr(data-l)': ';color:var(--muted);font-size:12px}
+ .c.del{position:absolute;right:6px;top:4px}
+ .li{position:relative}
+ .ph,.pr-row{grid-template-columns:1fr 120px 34px;padding:4px 8px}
+ .pr-row.confirm{grid-template-columns:1fr 110px 70px}
+}
+</style><script id="headtpl" type="text/plain"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Эльбаззаро"><meta name="application-name" content="Эльбаззаро"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#f6dfb3"><title>Эльбаззаро</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Lobster&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet"></script></head>
+<body><div id="root"></div>
+<script id="data" type="application/json">{"prices": [["абрикос", null], ["авокадо", 25000], ["агар-агар", 760000], ["аджика", 100000], ["айсберг", 20000], ["ананас бемби", null], ["ананас консерв", null], ["ананас чищ", 22500], ["анис", null], ["анчоус", null], ["апельсин бар", 30000], ["апельсин чан", 9000], ["апельсиновая цедра ( отход )", null], ["арбуз", null], ["ассорти для солянки", null], ["багет швейцарский", null], ["бадам", null], ["бадьян", null], ["базилик", 150000], ["баклажан", 25000], ["баклажаны корейские", null], ["бальзамический уксус", null], ["банан", 4000], ["баранина семечки", null], ["Баранина фарш", null], ["барилла листы для лазаньи", null], ["басай", null], ["батер \"BODY BUTTER\"", null], ["бедро куриное соховат", null], ["бодом", null], ["Болгарский перец", 40000], ["болгарский перец сухой стаф", 25000], ["бон филе", 950000], ["брезаола Салари ширин", null], ["бри президент", null], ["брюсельская капуста", null], ["буратто", 69000], ["бургер булочка", null], ["ванилин", null], ["вегетта", null], ["вешенки", 40000], ["винный уксус белый", 96000], ["винный уксус красный", 96000], ["вино белое сухое", 73000], ["вино для глинтвейна", null], ["вино красное сухое", null], ["виноград зеленый", null], ["виноград красный", null], ["виноград черный", 70000], ["вишневый сок ВИКО", null], ["вишня с/м", 70000], ["вода", null], ["вода газированная", null], ["водка", null], ["водка секрет", null], ["водка Хортица 0.5", null], ["ворчестер", 320000], ["газ вода 1 л", null], ["гамодари соус ( ореховый)", null], ["гвоздика", null], ["Говядина на кости II сорт", null], ["говяжий фарш", 110000], ["говяжья ветчина", 320000], ["голень барана", 212000], ["голень куринная", 43000], ["голубика св", 280000], ["голубцы шт", null], ["горох", null], ["горошек с/м", 78000], ["горчица дижонская", 129000], ["горчица зерно", null], ["гранат", 80000], ["гранат", null], ["гранатовый сок ВИКО", null], ["грейпфрукт кухня", 40000], ["грейпфрукт чан", 20000], ["грецкий орех", 100000], ["гречка мистраль", 12000], ["гриссини палочки", 70000], ["груша китайская", 25000], ["дайкон", 11000], ["джанду", null], ["дорадо", null], ["дорадо охл 400 гр", null], ["дошида приправа", null], ["доширак", null], ["драгон", 25000], ["Дрожжи свежие", null], ["дрожжи сухие", null], ["дунганский перец", null], ["Душистый перец", 200000], ["дыня", null], ["ежевика св", null], ["желатин", null], ["желтые помидоры ( Черри)", 140000], ["жидкий дым", 67000], ["зелень (укроп петрушка,кинза)", 35000], ["зигир масло", 50000], ["зира", 100000], ["изюм", 40000], ["изюм белый", null], ["изюм черный", null], ["икра красная", 3500000], ["икра палтус", null], ["имбирь бар", 50000], ["Индейка филе", 150000], ["инжир", null], ["йогурт ГРЕЧЕСКИЙ", null], ["кабачковая икра", null], ["кабачок", 25000], ["казы", 350000], ["каймак", null], ["какао", 320000], ["камамбер", 320000], ["канина мясо", null], ["каперсы", null], ["капуста армянская красная соленая", 20000], ["капуста белокачанная", 5000], ["капуста брокколи", null], ["капуста краснокочанная", null], ["кардамон", 800000], ["каре ягненка", null], ["каркаде", null], ["карри санта мария", null], ["картофель", 8000], ["картофель большой шт", null], ["картофель фри фасовка", "накладная"], ["картофельные дольки", "накладная"], ["качалка", 155000], ["качудян паста", 100000], ["квас  литр", "накладная"], ["квашенная капуста", 20000], ["кедровые орешки", null], ["Кетчуп Heinz", 50000], ["кефир", 22000], ["кешью", 200000], ["киви бар", null], ["киви зеленый", 80000], ["киви красный", 25000], ["киноа", null], ["кишмиш", null], ["клубника св", 250000], ["клюква с/м", 80000], ["кокосовое молоко", null], ["кола 1,5 л", null], ["колбаса альпийская", null], ["колбаса для стафф", 100000], ["колбаса ширин", null], ["Контрфиле", null], ["конфеты НГ велком", null], ["коньяк", 192000], ["копченая индейка", 80000], ["корейка баранина", null], ["Кориандр", 40000], ["корица", null], ["корица палочки", null], ["Корнишоны огурцы дядя Ваня", 167000], ["Кости и обрезки белой рыбы", 30000], ["кости на холодец", null], ["Кости сахарные и коленные суставы", 25000], ["Кости суповые с мясом, колено, хвосты", null], ["кофе (отход) для парения", null], ["кофе зерно", 385000], ["кофе на десерт", null], ["краб камчатский оригинал", 1800000], ["красная смородина кр", 480000], ["Красные помидоры ( черри)", 60000], ["крахмал кукурузный", 15000], ["креветка", 220000], ["Крем бальзамик", null], ["Кремчиз", 105000], ["кролик", null], ["крылышки", 45000], ["кубики бульон", 800], ["кукуруза бон дюэль", 78000], ["кукуруза вак мак", null], ["кунжут", null], ["кунжут черный", null], ["курага", null], ["курдюк", null], ["курин бедро на шашлык", null], ["куриная грудка", 8000], ["куриная печень", 10000], ["куринное филе", 44000], ["куринный фарш", null], ["куриное бедро", 45000], ["куриные кости", 8000], ["курица целиком (суповая)", null], ["куркума", null], ["курт кг", "накладная"], ["курт, шт", null], ["курук чой", null], ["лаваш", null], ["Лавровый лист", 70000], ["лагман", 14000], ["лайм бар", null], ["лайм шт", null], ["лайм, кг", 85000], ["латук", null], ["лед", null], ["леденцы", null], ["ледовые шайбы", null], ["лемонграсс", null], ["лимон шт", null], ["лимон, кг", 30000], ["лимонный концентрат", null], ["лимонный сок бутылочный", null], ["лист салата", null], ["лола росса", null], ["лола россо", null], ["лопатка силиконовая", null], ["лосьон массажный sothys", null], ["лотус паста", null], ["лук", 6000], ["лук - порей", 55000], ["лук белый", 7500], ["лук зеленый", 74000], ["лук красный", 7500], ["лук шалот", null], ["майонез махеев", null], ["майонез пинар", 60000], ["майонез хельманс", null], ["мак", null], ["макароны стаф", 13000], ["макиз паутинка", null], ["малина с/м", null], ["малина св", 240000], ["малиновый джем", null], ["МАНГО", 60000], ["мандарины", 45000], ["мандарины НГ велком", null], ["манка стафф", null], ["маракуя", 15000], ["маргарин щедрое лето", null], ["маринованные помидоры", 50000], ["маршмелло", null], ["маслины", 160000], ["масло для массажа GERMANE", null], ["масло для фритюрное", 31000], ["масло кунжутное", 100000], ["Масло оливковое extra virgin", 330000], ["масло растительное", 25000], ["масло сливочное президент", 215000], ["масло трюфельное", null], ["масло украина", 70000], ["маталышка баранина", null], ["махровое полотенце", null], ["маченка", 20000], ["маш", 25000], ["маш пророшок", null], ["мед", 100000], ["Мёд акации", null], ["мед горный", null], ["мельницы для кухни", null], ["мидии", 80000], ["миндаль", null], ["миндаль без кожицы", null], ["Миндаль лепестки", null], ["мини лепешки", null], ["минтай", null], ["мирин", null], ["мицукан", null], ["молдон соль", null], ["Молодой картофель", 17000], ["молоко 1% пармастерам", null], ["молоко 2,5%", 17000], ["морковча", 25000], ["морковь", 6000], ["морковь резанная", null], ["мороженое", null], ["морская соль на коллективное", 30000], ["мортаделла с фисташками Салари", null], ["моцарелла", 510000], ["мука", 9800], ["мука темпура", null], ["мультигрин", null], ["Мускатный орех", null], ["мутти пилатти", null], ["мясные снэки (124) тохтоньез", null], ["мясные чипсы (120) тохтоньез", null], ["мясо баранина на шашлык", null], ["мясо на шашлык", null], ["мята бар", 50000], ["мята бар сухая", null], ["набор на плов без мяса", null], ["набор специй для мясных блюд", null], ["нагетсы куриные мираторг", null], ["нишолда", null], ["новат", null], ["ножницы", null], ["нори", null], ["нут моченый", null], ["нут сухой", null], ["нутелла", null], ["облепиха с/м", null], ["Обрезки говядины (реберная часть)", 25000], ["овсянка стафф", null], ["огурец", 30000], ["огурцы соленые стафф", 30000], ["огурцы стафф", 25000], ["окорок утенка мираторг", null], ["окорочка для супа", null], ["оливки без косточки", 160000], ["оливки гигант", null], ["оливковое масло де чекко", null], ["орегано", null], ["освежитель стафф", null], ["пак чой", 7800], ["пакеты для вакуума бол", 100000], ["пакеты для вакуума мал", null], ["пакеты для тапочек", null], ["панировочные сухари", 50000], ["паприка копченая", 250000], ["паприка сладкая", 30000], ["пармезан стафф", 158000], ["паста лотус", null], ["паста том ям", null], ["пекан орех", null], ["ПЕКИНСКАЯ КАПУСТА", null], ["пельмени стафф мираторг", null], ["пенэ руммо", null], ["перепелинное яйцо", 600], ["перепелка 220-250 гр", null], ["перец каенский", 250000], ["перец маринованный цицак", null], ["перец черный свежемолотый", null], ["перловка", null], ["персик св", null], ["ПЕРЧАТКИ ДЛЯ ПИЛИНГА", null], ["петрушка", null], ["печень говяжья", null], ["печенье", null], ["печенье лотус", null], ["печенье савоярди", null], ["пиво для кухни", null], ["пилинг garmane oliva", null], ["пилинг кокосовый", null], ["пилинг шоколад", null], ["пиц краситель", null], ["плавленный сыр Виола", null], ["подарочный набор \"BODY BUTTER\"", null], ["помело", null], ["помидор розовый", 40000], ["помидоры свежие", 25000], ["пост думба", 120000], ["почечный жир", null], ["принглес сметана", null], ["просеко мл", 340000], ["простынь", null], ["пшено", null], ["пюре давка", null], ["рагу", null], ["разрыхлитель", null], ["райхон красный", null], ["раки живые", null], ["рамен", null], ["реберное мясо стафф", 145000], ["ребра для супа", null], ["ребро говяжье (мираторг)", null], ["Редис", 37000], ["редька", null], ["рис аланга", 20000], ["рис арборио", 85000], ["рис барилла 26", null], ["рис лазер", 24000], ["рисовая лапша", null], ["розмарин", 150000], ["романо", 50000], ["руколла", 67000], ["рыбные кости", null], ["рыбный соус", null], ["салат стафф", null], ["салфетки для стекл фрекен бок", 22500], ["салфетки массажистам", null], ["салями еврейская", null], ["сатис масло для массажа", null], ["сатис парф концентрат апельсиновый цвет + кедровое дерево+ HOME", null], ["сахар", 12000], ["сахар коричневый", 72000], ["сахарная пудра", 25000], ["сбор", null], ["свекла", 7000], ["сгущ молоко", null], ["селедка МАТИАС", 160000], ["Сельдерей стебель", 40000], ["семена  льна", null], ["семена фенхеля", null], ["семечки подсолнечника", null], ["сетки для раковины", null], ["сироп баринов лес ягоды", null], ["сито", null], ["скраб Biodroga", null], ["скраб LCN", null], ["скрепки", null], ["Скумбрия с/м", null], ["слива", null], ["сливки 33% президент", 110000], ["сливки россия", 75000], ["сливки стаф", 70000], ["сметана 20%", 127000], ["сметана стафф", 66000], ["смородина с/м", null], ["снежный краб палочки", 110000], ["сода", 16000], ["Соевый соус кикоман", 115000], ["сок апельсиновый на дорадо", null], ["соленное ассорти стафф", null], ["соль", 10000], ["соль \"GAYA\"", null], ["соль малдон", null], ["соль нитратная", 100000], ["сосиска канад", null], ["сосиски особая итальяно (131) тохтоньез", null], ["сосиски охот корзинка", 113000], ["сосиски стафф", 50000], ["сососка говядина", null], ["соус ББК", null], ["соус демиглас мираторг", null], ["соус из томатов пилати", null], ["соус нашарап", null], ["соус свит чили", 51000], ["соус терияки", null], ["соус хайсин", null], ["соус ширачи", 60000], ["соя", 30000], ["спагетти барилла", 13000], ["СПАРЖА", null], ["специи для лагмана", null], ["специи для мяса", null], ["специи для плова", null], ["спирт", null], ["спрей для окон", null], ["стакан + крышка", null], ["стафф приправа", null], ["страчителла", null], ["страчителла", null], ["строчителла", null], ["стручковый перец свежий", null], ["стручковый сухой перец", null], ["судак", null], ["сузьма", null], ["сумаляк", null], ["сусло", null], ["сухофрукты", null], ["сушки", 30000], ["сыр голанский", 120000], ["сыр дор-блю", 235000], ["сыр масдам", 160000], ["сыр маскорпоне", null], ["сыр милд блю", null], ["сыр пармезан грано подано", 350000], ["сыр фетаки", 120000], ["сыр хохоланд", null], ["сыр чеддер", null], ["сыр чечел", 125000], ["табак для кальяна", null], ["табаско", null], ["табосско", null], ["тахини", null], ["творог", 67000], ["терка", null], ["Тесто вонтон", null], ["тесто катафи", null], ["тесто манпар", null], ["Тимьян", null], ["ткемалли соус", null], ["толкушка для картошки", null], ["томатная паста", 30000], ["томатный сок мл", null], ["томаты вяленые", null], ["тостерный хлеб", null], ["трава мята", null], ["травы (отход)", null], ["транч мраморный Салари ширин", null], ["транч мясо", 170000], ["тряпки протирочные", 25000], ["тунец в масле", null], ["тутовник", null], ["тыква", null], ["тыква", null], ["тыквенные семечки", null], ["уголь для кальяна", null], ["укроп", null], ["уксус 70%", null], ["уксус 9% дядя ваня", 25000], ["уксус белый винный ponti", null], ["уксус изюмовый", null], ["Устричный соус", null], ["утка тушка 2 кг", null], ["фанта 1,5л", null], ["фарфале макароны", null], ["фарш мираторг", null], ["фасоль", null], ["фасоль белая", null], ["фери", null], ["фетучини руммо", null], ["физалис св", null], ["филе куриное соховат", null], ["филе утки", null], ["финики", null], ["фисташки", 250000], ["фисташки зеленые", 450000], ["фисташковая паста", null], ["форель", 205000], ["фри батат", null], ["фризе", null], ["фруктовые чипсы малина (павлова)", null], ["фундук", null], ["фунчеза из батата", null], ["фунчеза стафф", null], ["халат", null], ["халва", null], ["Хвосты ГОВ", null], ["хлеб джиотта зерновой для бускет", 47000], ["хлеб для кваса", null], ["хлеб из гречки", 33000], ["хлеб ржаной на чесночные гренки", null], ["Хлеб стафф", 32000], ["хлопковое масло", null], ["хмелли сунелли", null], ["ход дог булочка", null], ["хондаши", 160000], ["хохланд плавленный", null], ["хрен сливочный", 100000], ["хурма", 91000], ["цветная капуста", 20000], ["цыпленок 450-500 гр", 35000], ["цыцак зеленый", 42000], ["чабрец бар", null], ["чайник шт", null], ["чарва", null], ["чемчи салат", null], ["черешня", null], ["черная кинуа", null], ["чернослив", null], ["Черный перец горошком", null], ["чеснок головка", null], ["чеснок очищенный", 40000], ["чеснок шт", null], ["чесночная специя для мяса", null], ["чесночный порошок", null], ["чечевица", 20000], ["чили перец", null], ["чим чи", 20000], ["чука", null], ["шампиноны", 70000], ["шампуры", null], ["швейцарский батон", null], ["шиповник бар", null], ["шитаки", null], ["шоколад 70% коллебаут", null], ["шоколад белый", 180000], ["шоколад горячий", null], ["шоколад российский", null], ["шоколадный топинг", null], ["шоколод казахстан", null], ["шоколод светлый", null], ["шпинат", 80000], ["шприц", null], ["щавель", null], ["щеки говяжьи мираторг", "накладная"], ["щеки стафф", null], ["эдамаме", null], ["экономки для картошки", null], ["эстрагон", null], ["яблоко", null], ["яблоко зеленое", 12000], ["яблоко кислое целое", null], ["яблоко красное", 15000], ["яблоко фреш", null], ["яблочный сок уп", null], ["ягодный коктейль мираторг", null], ["язык", null], ["яйцо", 1733], ["яними соль", null], ["borjomi 0.5", null], ["coca cola 0.250 стекло", null], ["coca cola zero", null], ["fanta 0.25 стекло", null], ["sprite 0.5", null], ["бон аква 0.5 без газа", null], ["бон аква 0.5 газ", null], ["вода 1,5 л ГИДРОЛАЙФ", null], ["вода chartog PREMIUM без газ  0.33", null], ["вода chartog PREMIUM газ  0.5", null], ["вода chartog без газа 0.33", null], ["вода chartog минерал 0.33", null], ["вода EVIAN 0.5", null], ["сок RICH апельсин", 45000], ["сок RICH вишня", 27000], ["сок RICH томат", 27000], ["сок RICH яблоко", 27000], ["сок ананас", null], ["ксантана порошок", null], ["молоко 6%", null], ["каша пшеничная", null], ["кумин", null], ["соус унаги", null], ["икра черная", null], ["курица для запекания НГ", null], ["пюре адрос голубика НГ", null], ["тесто фила", null], ["аскорбиновая кислота", null], ["бисульфат натрия", null], ["вода каперсов", null], ["копченный сыр", null], ["лук фри", null], ["чернила каракатицы", null], ["пюре клубника", null], ["пюре малина", null], ["пюре манго", null], ["пюре маракуйя", null], ["сорбет апельсин", null], ["сорбет малина", null], ["говядина задняя часть", null], ["окорочка заморозка стафф", null], ["азелит", 26000], ["антибактериальный спрей ECO TOCH", null], ["антисептик", null], ["ариэль капсулы", 3460], ["арома масло", null], ["баллончик для чифона", null], ["бамага офисная", null], ["батарейки пальчиковые", null], ["бахилы", null], ["белизна", 8000], ["брелок для ключей", null], ["бумага А4", null], ["бумага для принтера 80 мм", null], ["бумага для принтера маленькая", null], ["ватные палочки", 20000], ["вафельное полотно", 10000], ["ведро 15 л", null], ["веники для уборки", null], ["венчик", null], ["весы", null], ["влажные салфетки", 20000], ["газовый балон", null], ["гель для посуды", 20000], ["горелка", null], ["губка белая", 10000], ["губки", 9000], ["губки металлические", 5000], ["дельфин тряпки", 9000], ["деревянные лопатки", null], ["диски ватные", 20000], ["диспенсер", 12000], ["доместос", 32000], ["ершики", null], ["жидкое мыло", 20000], ["зажигалки", null], ["зип пакет", null], ["зубочистки коробка", null], ["капсулы для стирки", null], ["кассовая лента", null], ["кепки поварам", null], ["клизма", null], ["кольцо для чизкейга 20 см", null], ["кондитерский мешок", null], ["контейнер", null], ["контейнеры однораз", null], ["креманки", null], ["кружки персонал", null], ["лента для маркировки", null], ["лимонная кислота для стирки", null], ["маркер", null], ["микрозелень горох", null], ["мусорные баки", null], ["мусорные пакеты", 20000], ["мусорные пакеты 50*70", 14000], ["мусорный бак на колесах", null], ["мыло дегтярное", null], ["насадка кондитеркая частая звездочка", null], ["нож", null], ["ополаскиватель первул", null], ["открывашка", null], ["пакет отрывной большой", 25000], ["пакет отрывной маленький", 15000], ["палочки для арбуза", null], ["пемолюкс", null], ["пергамент", null], ["перчатки прихватки", null], ["перчатки упаковка", 42000], ["перчатки шт", 9000], ["пистолет для газ балона", null], ["порошок персил жидкий 1 л", null], ["порошок персил жидкий турция 4 л", 120000], ["порошок персил сухой 3 кг", 85000], ["порошок персил сухой 6 кг", null], ["пятновыводитель", null], ["резинка для денег", null], ["ручки шариковые", null], ["салфетки эльма шт офики", 6000], ["Селиконовый коврик", null], ["силиконовая форма для льда", null], ["сиф", null], ["скотч молярный", 15000], ["стрейч пленка большя", 45000], ["сушилка для зелени", null], ["таблетки для розжига", null], ["тазики для дров", null], ["термостат", null], ["термощипцы", null], ["тетрадь", null], ["торус для мебели спрей", 38000], ["тройник", null], ["трубочки", null], ["тряпки половые", 40000], ["туалетная бумага", null], ["уголь для коптилки", null], ["удлинитель", null], ["фартуки", null], ["фольга", 140000], ["хлор таблетки", null], ["хоз мыло", null], ["чашка+блюдла", null], ["шапочки одноразовые", null], ["шпажки бамбуковые", null], ["шпажки с завитушкой", null], ["Шпатель кондитерский", null], ["штопер", null], ["щетка для чайника", null], ["щетки для чанов", null], ["эрвик освежитель сменный", null], ["варенье кизил", 100000], ["варенье малина", 70000], ["варенье смородина", 80000], ["травяной чай", 180000], ["чай AHMAD ceylon", 280000], ["чай AHMAD earl grey", null], ["чай AHMAD green", 200000], ["чай AHMAD зеленый жасмин", null], ["чай листовой стафф", null], ["шоколад Essse", null]], "updated": "2026-11-19T12:03:13.670084+00:00"}</script>
+<script id="app">(function(){
+"use strict";
+var DATA = JSON.parse(document.getElementById('data').textContent);
+var prices = DATA.prices.map(function(r,i){ return {id:i, name:r[0], price:r[1]}; });
+var savedSnapshot = JSON.stringify(DATA.prices);
+var nextId = prices.length;
+var artifactApi = null;
+var LS_KEY = 'elbazzaro_prices_v1';
+
+// local fallback (used only when the shared save is unavailable)
+try {
+  var loc = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+  if (loc && loc.base === DATA.updated && Array.isArray(loc.prices)) {
+    prices = loc.prices.map(function(r,i){ return {id:i, name:r[0], price:r[1]}; });
+    nextId = prices.length;
+    savedSnapshot = JSON.stringify(loc.prices);
+  }
+} catch(e){}
+
+if (window.claude && window.claude.use) {
+  window.claude.use('artifact').then(function(a){ artifactApi = a; }).catch(function(){});
+}
+
+/* ---------- helpers ---------- */
+function $(s, el){ return (el||document).querySelector(s); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function fmt(n){ var neg = n<0; var s = Math.round(Math.abs(n)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.'); return (neg?'-':'')+s; }
+function fmtQty(q){ if(q==null||isNaN(q)) return ''; return String(+(+q).toFixed(3)).replace('.',','); }
+function isNum(p){ return typeof p === 'number' && isFinite(p); }
+function priceText(p){ return isNum(p) ? fmt(p) : (p==null ? '' : String(p)); }
+function parsePriceInput(v){
+  v = String(v).trim();
+  if (v === '') return null;
+  if (/^[\d\s.]+$/.test(v)) return parseInt(v.replace(/[\s.]/g,''),10);
+  if (/^\d+,\d+$/.test(v)) return parseFloat(v.replace(',','.'));
+  return v;
+}
+function currentRows(){ return prices.map(function(p){ return [p.name, p.price]; }); }
+function isDirty(){ return JSON.stringify(currentRows()) !== savedSnapshot; }
+
+/* ---------- fuzzy matching ---------- */
+function norm(s){ return String(s).toLowerCase().replace(/ё/g,'е').replace(/[^a-zа-я0-9 ]+/g,' ').replace(/\s+/g,' ').trim(); }
+function stem(s){ return s.split(' ').map(function(w){ return w.length>4 ? w.replace(/(ами|ями|ого|ой|ая|ые|ов|ев|ей|ы|и|а|я|у|ю|е|о)$/,'') : w; }).join(' '); }
+function lev(a,b){
+  var m=a.length, n=b.length; if(!m) return n; if(!n) return m;
+  var prev=new Array(n+1), cur=new Array(n+1), i, j;
+  for(j=0;j<=n;j++) prev[j]=j;
+  for(i=1;i<=m;i++){ cur[0]=i; for(j=1;j<=n;j++){ cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+(a[i-1]===b[j-1]?0:1)); } var t=prev; prev=cur; cur=t; }
+  return prev[n];
+}
+function sim(a,b){ if(!a||!b) return 0; return 1 - lev(a,b)/Math.max(a.length,b.length); }
+var index = null;
+function buildIndex(){
+  index = prices.filter(function(p){ return p.name && norm(p.name); }).map(function(p){
+    var n = norm(p.name); return {p:p, n:n, st:stem(n), words:n.split(' ')};
+  });
+}
+function scoreItem(q, qs, qk, it){
+  if (q === it.n) return 1;
+  var s = Math.max(sim(q, it.n), sim(qs, it.st));
+  var head = it.words.slice(0, qk).join(' ');
+  if (it.words.length > qk) s = Math.max(s, sim(q, head)*0.93, sim(qs, stem(head))*0.92);
+  if (q.length >= 3 && it.n.indexOf(q) === 0 && it.n !== q) s = Math.max(s, 0.9);
+  return s;
+}
+function match(text){
+  if(!index) buildIndex();
+  var q = norm(text); if(!q) return {item:null, score:0, alts:[]};
+  var qs = stem(q), qk = q.split(' ').length;
+  var scored = index.map(function(it){ return {it:it, s:scoreItem(q,qs,qk,it)}; });
+  scored.sort(function(a,b){ return (b.s-a.s) || (a.it.n.length-b.it.n.length); });
+  var best = scored[0];
+  return {item: best && best.s >= 0.7 ? best.it.p : null, score: best ? best.s : 0,
+          alts: scored.slice(0,4).filter(function(x){ return x.s>=0.5; }).map(function(x){ return x.it.p; })};
+}
+
+/* ---------- order parsing ---------- */
+var UNIT_RE = '(кг|килограмм[а-я]*|кило|гр|грамм[а-я]*|г|шт[а-я]*|штук[а-я]*|мл|л|литр[а-я]*|пач[а-я]*|упак[а-я]*|уп|ящ[а-я]*|короб[а-я]*|пуч[а-я]*|бут[а-я]*|бан[а-я]*|kg|gr|g|pcs)';
+function normUnit(u, q){
+  if(!u) return {u:'', q:q};
+  u = u.toLowerCase();
+  if (/^(кг|кило|килограмм|kg)/.test(u)) return {u:'кг', q:q};
+  if (/^(гр|грамм|г$|gr|g$)/.test(u)) return {u:'кг', q:q/1000};
+  if (/^шт|^штук|^pcs/.test(u)) return {u:'шт', q:q};
+  if (u === 'мл') return {u:'л', q:q/1000};
+  if (/^(л|литр)/.test(u)) return {u:'л', q:q};
+  if (/^пач/.test(u)) return {u:'пачка', q:q};
+  if (/^(упак|уп)/.test(u)) return {u:'упак', q:q};
+  if (/^ящ/.test(u)) return {u:'ящик', q:q};
+  if (/^короб/.test(u)) return {u:'коробка', q:q};
+  if (/^пуч/.test(u)) return {u:'пучок', q:q};
+  if (/^бут/.test(u)) return {u:'бут', q:q};
+  if (/^бан/.test(u)) return {u:'банка', q:q};
+  return {u:u, q:q};
+}
+function parseLine(raw){
+  var t = raw.replace(/^\s*\d{1,2}\s*[.)]\s+/, '');
+  t = t.replace(/[^\p{L}\p{N}\s.,\/]/gu, ' ').replace(/\s+/g,' ').trim();
+  var withUnit = new RegExp('(\\d+(?:[.,]\\d+)?)\\s*' + UNIT_RE + '(?![а-яa-z])', 'i');
+  var m = t.match(withUnit), qty = null, unit = '', name = t;
+  if (m) {
+    var nu = normUnit(m[2], parseFloat(m[1].replace(',','.')));
+    qty = nu.q; unit = nu.u; name = (t.slice(0,m.index) + ' ' + t.slice(m.index + m[0].length));
+  } else {
+    var nums = [], re = /(\d+(?:[.,]\d+)?)/g, mm;
+    while ((mm = re.exec(t))) nums.push(mm);
+    if (nums.length) {
+      var last = nums[nums.length-1];
+      qty = parseFloat(last[1].replace(',','.'));
+      name = t.slice(0,last.index) + ' ' + t.slice(last.index + last[0].length);
+    }
+  }
+  name = name.replace(/\s+/g,' ').replace(/^[\s,.\/]+|[\s,.\/]+$/g,'').trim();
+  return {raw: raw.trim(), name: name, qty: qty, unit: unit};
+}
+function parseOrder(text){
+  return text.split(/\n|;|,(?!\d)/).map(function(s){ return s.trim(); })
+    .filter(function(s){ return /[а-яёa-z]/i.test(s) && !(/:\s*$/.test(s) && !/\d/.test(s)); })
+    .map(function(s){
+      var p = parseLine(s); var m = match(p.name || s);
+      return {raw:p.raw, name:p.name, qty:p.qty, unit:p.unit, item:m.item, score:m.score, alts:m.alts};
+    });
+}
+
+/* ---------- state ---------- */
+var tab = 'raschet';
+var orderText = '';
+var rows = null;
+var showInput = false;
+var priceFilter = '';
+try { orderText = sessionStorage.getItem('elb_order') || ''; } catch(e){}
+
+/* ---------- layout ---------- */
+var LOGO = '<svg class="logo" viewBox="0 0 200 128" aria-hidden="true">'+
+ '<path d="M64 60 Q62 16 100 12 Q138 16 136 60 Z" fill="#e7ad4c" stroke="#2b1a12" stroke-width="3"/>'+
+ '<path d="M66 50 Q100 58 134 50 L135 60 Q100 68 65 60 Z" fill="#c1352b" stroke="#2b1a12" stroke-width="2.5"/>'+
+ '<path d="M72 55 l6 -5 l6 5 l6 -5 l6 5 l6 -5 l6 5 l6 -5 l6 5 l6 -5 l6 5" fill="none" stroke="#fbf3e4" stroke-width="2"/>'+
+ '<path d="M6 54 Q14 74 100 76 Q186 74 194 54 Q172 66 100 66 Q28 66 6 54 Z" fill="#d79a3a" stroke="#2b1a12" stroke-width="3" stroke-linejoin="round"/>'+
+ '<path d="M24 66 Q100 80 176 66" fill="none" stroke="#2f7d4f" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/>'+
+ '<path d="M100 96 C90 88 72 88 60 98 C50 106 36 108 26 98 C28 112 46 120 62 113 C76 107 90 102 100 106 C110 102 124 107 138 113 C154 120 172 112 174 98 C164 108 150 106 140 98 C128 88 110 88 100 96 Z" fill="#2b1a12"/>'+
+ '<path d="M26 98 C22 94 22 88 27 86" fill="none" stroke="#2b1a12" stroke-width="4" stroke-linecap="round"/>'+
+ '<path d="M174 98 C178 94 178 88 173 86" fill="none" stroke="#2b1a12" stroke-width="4" stroke-linecap="round"/>'+
+ '</svg>';
+
+function render(){
+  var root = document.getElementById('root');
+  root.innerHTML =
+   '<header class="hero"><div class="hero-in">' + LOGO + '<h1>Эльбаззаро</h1></div><div class="picado"></div></header>' +
+   '<nav class="tabs" role="tablist">' +
+     tabBtn('ceny','Цены') + tabBtn('raschet','Расчёт') + tabBtn('statistika','Статистика') +
+   '</nav><main id="view"></main><div id="toast" class="toast"></div>';
+  root.querySelectorAll('.tab').forEach(function(b){ b.onclick = function(){ setTab(b.dataset.t); }; });
+  renderView();
+}
+function tabBtn(id, label){ return '<button class="tab'+(tab===id?' on':'')+'" role="tab" data-t="'+id+'" aria-selected="'+(tab===id)+'">'+label+'</button>'; }
+function setTab(t){
+  tab = t;
+  try { history.replaceState(null,'', t==='raschet' ? location.pathname : '#'+t); } catch(e){ location.hash = t; }
+  document.querySelectorAll('.tab').forEach(function(b){ var on=b.dataset.t===t; b.classList.toggle('on',on); b.setAttribute('aria-selected',on); });
+  renderView();
+}
+function renderView(){
+  var v = $('#view');
+  if (tab === 'ceny') renderPrices(v);
+  else if (tab === 'statistika') v.innerHTML = '<section class="card stub"><div class="stub-ico">🌵</div><h2>Статистика</h2><p>Раздел в разработке</p></section>';
+  else renderCalc(v);
+}
+function toast(msg, bad){
+  var t = $('#toast'); if(!t) return;
+  t.textContent = msg; t.className = 'toast show' + (bad?' bad':'');
+  clearTimeout(toast._t); toast._t = setTimeout(function(){ t.className='toast'; }, 3200);
+}
+
+/* ---------- calc view ---------- */
+function renderCalc(v){
+  var h = '';
+  if (!rows && !showInput) {
+    h += '<section class="card start"><button class="big" id="startBtn">🌶️ Рассчитать сегодняшний базар</button>'+
+         '</section>';
+  } else {
+    h += '<section class="card">'+
+         '<textarea id="orderTxt" aria-label="Заказ">'+esc(orderText)+'</textarea>'+
+         '<div class="row-btns"><button class="big sm" id="calcBtn">Рассчитать</button>'+
+         (orderText ? '<button class="ghost" id="clearBtn">Очистить</button>' : '') + '</div></section>';
+  }
+  if (rows) h += resultHtml();
+  v.innerHTML = h;
+  var sb = $('#startBtn'); if (sb) sb.onclick = function(){ showInput = true; renderView(); var ta=$('#orderTxt'); ta && ta.focus(); };
+  var ta = $('#orderTxt');
+  if (ta) ta.oninput = function(){ orderText = ta.value; try{ sessionStorage.setItem('elb_order', orderText); }catch(e){} };
+  var cb = $('#calcBtn');
+  if (cb) cb.onclick = function(){
+    orderText = $('#orderTxt').value;
+    if (!orderText.trim()) { toast('Вставьте текст заказа', true); return; }
+    buildIndex(); rows = parseOrder(orderText);
+    if (!rows.length) { toast('Не нашёл ни одной позиции', true); }
+    renderView();
+    var r = $('#result'); r && r.scrollIntoView({behavior:'smooth', block:'start'});
+  };
+  var cl = $('#clearBtn'); if (cl) cl.onclick = function(){ orderText=''; rows=null; try{sessionStorage.removeItem('elb_order');}catch(e){} renderView(); };
+  if (rows) bindResult();
+}
+function rowSum(r){ return (r.item && isNum(r.item.price) && r.qty!=null && !isNaN(r.qty)) ? r.qty * r.item.price : null; }
+function totals(){
+  var t = 0, ok=0, noPrice=0, noQty=0, unk=0;
+  rows.forEach(function(r){
+    if (!r.item) { unk++; return; }
+    if (!isNum(r.item.price)) noPrice++;
+    if (r.qty==null || isNaN(r.qty)) noQty++;
+    var s = rowSum(r); if (s!=null){ t += s; ok++; }
+  });
+  return {t:t, ok:ok, noPrice:noPrice, noQty:noQty, unk:unk};
+}
+function resultHtml(){
+  var T = totals();
+  var h = '<section id="result">';
+  h += '<div class="total"><div class="total-l">Сумма базара сегодня</div><div class="total-v" id="totalV">'+fmt(T.t)+' <span>сум</span></div>'+
+       '<div class="chips" id="chips">'+chipsHtml(T)+'</div></div>';
+  h += '<div class="list">';
+  h += '<div class="lh"><span>Из заказа</span><span>Товар в базе</span><span>Кол-во</span><span>Цена</span><span>Сумма</span><span></span></div>';
+  rows.forEach(function(r,i){ h += rowHtml(r,i); });
+  h += '</div>';
+  h += '<datalist id="dl">' + prices.filter(function(p){return p.name;}).map(function(p){ return '<option value="'+esc(p.name)+'">'; }).join('') + '</datalist>';
+  h += '<div class="row-btns end"><button class="ghost" id="addRow">+ Добавить строку</button><button class="ghost" id="copyBtn">Скопировать итог</button></div>';
+  h += '<textarea id="copyBox" class="copybox" readonly hidden></textarea>';
+  h += '</section>';
+  return h;
+}
+function chipsHtml(T){
+  var c = '<span class="chip ok">✔ посчитано: '+T.ok+' из '+rows.length+'</span>';
+  if (T.unk) c += '<span class="chip red">не распознано: '+T.unk+'</span>';
+  if (T.noPrice) c += '<span class="chip amber">без цены: '+T.noPrice+'</span>';
+  if (T.noQty) c += '<span class="chip amber">без количества: '+T.noQty+'</span>';
+  return c;
+}
+function rowState(r){
+  if (!r.item) return 'unk';
+  if (!isNum(r.item.price) || r.qty==null || isNaN(r.qty)) return 'warn';
+  return 'ok';
+}
+function rowHtml(r,i){
+  var st = rowState(r), s = rowSum(r);
+  var note = '';
+  if (!r.item) note = 'Не распознано' + (r.alts.length ? ' · может: ' + r.alts.slice(0,3).map(function(a){ return '<button class="sugg" data-i="'+i+'" data-id="'+a.id+'">'+esc(a.name)+'</button>'; }).join(' ') : '');
+  else if (!isNum(r.item.price)) note = 'Нет цены' + (r.item.price ? ' («'+esc(r.item.price)+'»)' : '') + ': укажите во вкладке «Цены»';
+  else if (r.qty==null || isNaN(r.qty)) note = 'Укажите количество';
+  else if (r.score < 0.999 && norm(r.name) !== norm(r.item.name)) note = 'Опознано как «'+esc(r.item.name)+'» ('+Math.round(r.score*100)+'%)';
+  return '<div class="li '+st+'" data-i="'+i+'">'+
+    '<div class="c raw" data-l="Из заказа">'+esc(r.raw)+'</div>'+
+    '<div class="c prod" data-l="Товар"><input class="in pin" list="dl" value="'+esc(r.item?r.item.name:'')+'" placeholder="выберите товар" data-i="'+i+'"></div>'+
+    '<div class="c qty" data-l="Кол-во"><input class="in qin" inputmode="decimal" value="'+esc(fmtQty(r.qty))+'" data-i="'+i+'"><span class="u">'+esc(r.unit)+'</span></div>'+
+    '<div class="c pr" data-l="Цена">'+(r.item && isNum(r.item.price) ? fmt(r.item.price) : '—')+'</div>'+
+    '<div class="c sm" data-l="Сумма"><b>'+(s!=null ? fmt(s) : '—')+'</b></div>'+
+    '<div class="c del"><button class="x" title="Убрать строку" data-i="'+i+'">×</button></div>'+
+    (note ? '<div class="note">'+note+'</div>' : '') +
+  '</div>';
+}
+function refreshRow(i){
+  var el = document.querySelector('.li[data-i="'+i+'"]');
+  var tmp = document.createElement('div'); tmp.innerHTML = rowHtml(rows[i], i);
+  el.replaceWith(tmp.firstChild); bindRowEls(document.querySelector('.li[data-i="'+i+'"]'));
+  updateTotals();
+}
+function updateTotals(){ var T = totals(); $('#totalV').innerHTML = fmt(T.t)+' <span>сум</span>'; $('#chips').innerHTML = chipsHtml(T); }
+function findByName(v){ var n = norm(v); for (var k=0;k<prices.length;k++) if (norm(prices[k].name)===n) return prices[k]; return null; }
+function bindRowEls(el){
+  var pin = el.querySelector('.pin'), qin = el.querySelector('.qin'), x = el.querySelector('.x');
+  pin.onchange = function(){
+    var i = +pin.dataset.i, v = pin.value.trim();
+    if (!v) { rows[i].item = null; rows[i].alts=[]; refreshRow(i); return; }
+    var p = findByName(v);
+    if (p) { rows[i].item = p; rows[i].score = 1; rows[i].name = p.name; }
+    else { var m = match(v); rows[i].item = m.item; rows[i].score = m.score; rows[i].alts = m.alts; rows[i].name = v; }
+    refreshRow(i);
+  };
+  qin.onchange = function(){
+    var i = +qin.dataset.i, v = qin.value.trim().replace(',','.');
+    rows[i].qty = v === '' ? null : parseFloat(v); refreshRow(i);
+  };
+  x.onclick = function(){ rows.splice(+x.dataset.i,1); renderView(); };
+  el.querySelectorAll('.sugg').forEach(function(b){
+    b.onclick = function(){ var i=+b.dataset.i, id=+b.dataset.id; var p = prices.filter(function(q){return q.id===id;})[0]; rows[i].item=p; rows[i].score=1; refreshRow(i); };
+  });
+}
+function bindResult(){
+  document.querySelectorAll('.li').forEach(bindRowEls);
+  $('#addRow').onclick = function(){ rows.push({raw:'(добавлено вручную)', name:'', qty:null, unit:'', item:null, score:0, alts:[]}); renderView(); var all=document.querySelectorAll('.pin'); all[all.length-1].focus(); };
+  $('#copyBtn').onclick = function(){
+    var T = totals(), lines = ['🌮 Эльбаззаро · базар ' + new Date().toLocaleDateString('ru-RU'), ''];
+    rows.forEach(function(r){
+      var s = rowSum(r);
+      if (r.item) lines.push(r.item.name + ': ' + (r.qty!=null?fmtQty(r.qty)+(r.unit?' '+r.unit:''):'?') + ' × ' + (isNum(r.item.price)?fmt(r.item.price):'нет цены') + ' = ' + (s!=null?fmt(s):'—'));
+      else lines.push('❓ ' + r.raw + ': не распознано');
+    });
+    lines.push('', 'ИТОГО: ' + fmt(T.t) + ' сум');
+    var txt = lines.join('\n');
+    var box = $('#copyBox');
+    var done = function(){ toast('Итог скопирован'); };
+    var fallback = function(){ box.hidden = false; box.value = txt; box.focus(); box.select(); try { document.execCommand('copy'); done(); } catch(e){ toast('Выделите текст и скопируйте'); } };
+    try { navigator.clipboard.writeText(txt).then(done, fallback); } catch(e){ fallback(); }
+  };
+}
+
+/* ---------- prices view ---------- */
+function renderPrices(v){
+  var upd = DATA.updated ? new Date(DATA.updated) : null;
+  var h = '<section class="card ptools">'+
+    '<input id="pf" class="in search" placeholder="🔍 Поиск по наименованию" value="'+esc(priceFilter)+'">'+
+    '<div class="pmeta">'+prices.length+' позиций · с ценой: '+prices.filter(function(p){return isNum(p.price);}).length+
+    (upd && !isNaN(upd) ? ' · сохранено ' + upd.toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '') + '</div></section>';
+  h += '<div class="ptable"><div class="ph"><span>Наименование</span><span>Цена за единицу измерения</span><span></span></div><div id="pbody"></div></div>';
+  h += '<div class="row-btns"><button class="ghost" id="addP">+ Добавить позицию</button></div>';
+  h += '<div class="savebar"><span id="dirtyTxt"></span><button class="big sm" id="saveBtn">Сохранить</button></div>';
+  v.innerHTML = h;
+  drawPriceRows();
+  $('#pf').oninput = function(){ priceFilter = this.value; drawPriceRows(); };
+  $('#addP').onclick = function(){ prices.push({id:nextId++, name:'', price:null}); priceFilter=''; $('#pf').value=''; drawPriceRows(); updDirty(); var ins=document.querySelectorAll('.pname'); ins[ins.length-1].focus(); };
+  $('#saveBtn').onclick = savePrices;
+  updDirty();
+}
+function drawPriceRows(){
+  var f = norm(priceFilter);
+  var list = prices.filter(function(p){ return !f || norm(p.name).indexOf(f) !== -1 || (f.length>3 && sim(f, norm(p.name))>0.7); });
+  var h = list.map(function(p){
+    return '<div class="pr-row" data-id="'+p.id+'"><input class="in pname" value="'+esc(p.name)+'" aria-label="Наименование">'+
+      '<input class="in pprice'+(isNum(p.price)?'':' empty')+'" inputmode="numeric" value="'+esc(priceText(p.price))+'" placeholder="нет цены" aria-label="Цена">'+
+      '<button class="x" title="Удалить позицию">×</button></div>';
+  }).join('');
+  if (!list.length) h = '<div class="empty-msg">Ничего не найдено</div>';
+  var body = $('#pbody'); body.innerHTML = h;
+  body.querySelectorAll('.pr-row').forEach(function(row){
+    var id = +row.dataset.id, p = prices.filter(function(q){return q.id===id;})[0];
+    var ni = row.querySelector('.pname'), pi = row.querySelector('.pprice');
+    ni.oninput = function(){ p.name = ni.value; index = null; updDirty(); };
+    pi.oninput = function(){ p.price = parsePriceInput(pi.value); pi.classList.toggle('empty', !isNum(p.price)); updDirty(); };
+    pi.onblur = function(){ pi.value = priceText(p.price); };
+    row.querySelector('.x').onclick = function(){
+      if (row.classList.contains('confirm')) { prices = prices.filter(function(q){return q.id!==id;}); index=null; drawPriceRows(); updDirty(); }
+      else { row.classList.add('confirm'); this.textContent='Удалить?'; var b=this; setTimeout(function(){ if(document.body.contains(b)){ row.classList.remove('confirm'); b.textContent='×'; } }, 2500); }
+    };
+  });
+}
+function updDirty(){
+  var d = isDirty(), t = $('#dirtyTxt'), b = $('#saveBtn'); if(!t) return;
+  t.textContent = d ? 'Есть несохранённые изменения' : 'Все изменения сохранены';
+  t.className = d ? 'dirty' : '';
+  b.disabled = !d;
+}
+function buildDocument(rowsData, updated){
+  var json = JSON.stringify({prices: rowsData, updated: updated}).replace(/</g,'\\u003c');
+  var css = document.getElementById('css').textContent;
+  var app = document.getElementById('app').textContent;
+  var head = document.getElementById('headtpl').textContent;
+  return '<!DOCTYPE html>\n<html lang="ru">\n<head>' + head + '<style id="css">' + css + '</style>' +
+    '<script id="headtpl" type="text/plain">' + head + '<\/script></head>\n<body><div id="root"></div>\n' +
+    '<script id="data" type="application/json">' + json + '<\/script>\n<script id="app">' + app + '<\/script>\n</body>\n</html>';
+}
+function savePrices(){
+  var data = currentRows().filter(function(r){ return String(r[0]).trim() || r[1]!=null; });
+  var updated = new Date().toISOString();
+  var b = $('#saveBtn'); b.disabled = true; b.textContent = 'Сохраняю…';
+  var localSave = function(msg){
+    try { localStorage.setItem(LS_KEY, JSON.stringify({base: DATA.updated, prices: data})); savedSnapshot = JSON.stringify(currentRows()); toast(msg); }
+    catch(e){ toast('Не удалось сохранить', true); }
+    b.textContent = 'Сохранить'; updDirty();
+  };
+  if (!artifactApi) { localSave('Сохранено только в этом браузере'); return; }
+  try { history.replaceState(null,'','#ceny'); } catch(e){}
+  artifactApi.publish(buildDocument(data, updated)).then(function(){
+    savedSnapshot = JSON.stringify(currentRows()); toast('Цены сохранены'); b.textContent='Сохранить'; updDirty();
+  }).catch(function(err){
+    var code = err && (err.code || err.message) || '';
+    if (/conflict/.test(code)) { toast('Цены только что изменил кто-то другой, страница обновится', true); return; }
+    if (/not_granted|not_writer/.test(code)) { localSave('Нет прав на общее сохранение: сохранено только в этом браузере'); return; }
+    localSave('Общее сохранение недоступно: сохранено в этом браузере');
+  });
+}
+window.addEventListener('beforeunload', function(e){ if (isDirty()) { e.preventDefault(); e.returnValue=''; } });
+
+/* ---------- start ---------- */
+var h = (location.hash||'').replace('#','');
+if (h === 'ceny' || h === 'statistika') tab = h;
+window.addEventListener('hashchange', function(){ var t=(location.hash||'').replace('#','')||'raschet'; if(t!==tab && (t==='ceny'||t==='statistika'||t==='raschet')) setTab(t); });
+if (orderText) showInput = true;
+render();
+})();
+</script>
+</body>
+</html>
